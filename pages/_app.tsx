@@ -7,6 +7,8 @@ import { WalletLinkConnector } from "wagmi/connectors/walletLink";
 
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
 
+const chainId = 4; // rinkeby
+
 const chains = defaultChains;
 
 type Connector =
@@ -28,7 +30,7 @@ const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
     }),
     new WalletLinkConnector({
       options: {
-        appName: "NextJS-wagmi",
+        appName: "Timelock Creator",
         jsonRpcUrl: `${rpcUrl}/${infuraId}`,
       },
     }),
@@ -37,7 +39,7 @@ const connectors = ({ chainId }: { chainId?: number }): Connector[] => {
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider autoConnect connectors={connectors}>
+    <Provider autoConnect connectors={connectors({chainId: chainId})}>
       <Component {...pageProps} />
     </Provider>
   );
